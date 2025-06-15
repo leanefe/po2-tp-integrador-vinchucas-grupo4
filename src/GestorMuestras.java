@@ -20,10 +20,21 @@ class GestorMuestras {
     public List<Participante> getParticipantes() { return new ArrayList<>(participantes); }
     public List<Organizacion> getOrganizaciones() { return new ArrayList<>(organizaciones); }
     public List<ZonaDeCobertura> getZonasDeCobertura() { return new ArrayList<>(zonasDeCobertura); }
-    
+
     public List<Muestra> buscarMuestras(CriterioBusqueda criterio) {
         return muestras.stream()
                        .filter(criterio::cumple) 
                        .collect(Collectors.toList());
+    }
+
+    /**
+     * @param muestra
+     * @param distancia en Km
+     * @return Las muestras obtenidas a menor distancia que la dada.
+     */
+    public List<Muestra> buscarMuestrasAMenosDe(Muestra muestra, double distancia) {
+        return muestras.stream()
+                .filter(m -> muestra.getUbicacion().distanciaEnKmA(m.getUbicacion()) < distancia)
+                .toList();
     }
 }
