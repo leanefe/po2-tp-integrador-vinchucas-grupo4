@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class ZonaCobertura {
+    private String nombre;
+    private Ubicacion epicentro;
+    private double radio;
+    private List<Muestra> muestras;
+    private GestorEventosEnZonas gestor;
+
+    public ZonaCobertura(String nombre, Ubicacion epicentro, double radio) {
+        this.nombre = nombre;
+        this.epicentro = epicentro;
+        this.radio = radio;
+        this.muestras = new ArrayList<Muestra>();
+        this.gestor = new GestorEventosEnZonas();
+    }
+
+    public void agregarMuestra(Muestra muestra) {
+        this.muestras.add(muestra);
+        gestor.avisoPorNuevaMuestra(this, muestra);
+    }
+
+    public boolean abarcaA(Ubicacion ubicacion) {
+        return this.epicentro.distanciaEnKmA(ubicacion) <= this.radio;
+    }
+
+    /**
+     * Dos zonas se solapan si la distancia entre sus centros es menor que la suma de sus radios.
+     */
+    public boolean solapaA(ZonaCobertura zona) {
+        return epicentro.distanciaEnKmA(zona.getEpicentro()) <= this.radio - zona.getRadio();
+    }
+
+    private double getRadio() {
+        return radio;
+    }
+
+    private Ubicacion getEpicentro() {
+        return epicentro;
+    }
+}

@@ -6,7 +6,7 @@ class GestorMuestras {
     private List<Muestra> muestras;
     private List<Participante> participantes;
     private List<Organizacion> organizaciones;
-    private List<ZonaDeCobertura> zonasDeCobertura;
+    private List<ZonaCobertura> zonasDeCobertura;
 
     public GestorMuestras() {
         this.muestras = new ArrayList<>();
@@ -15,11 +15,18 @@ class GestorMuestras {
         this.zonasDeCobertura = new ArrayList<>();
     }
 
-    // Getters 
-    public List<Muestra> getMuestras() { return new ArrayList<>(muestras); }
-    public List<Participante> getParticipantes() { return new ArrayList<>(participantes); }
-    public List<Organizacion> getOrganizaciones() { return new ArrayList<>(organizaciones); }
-    public List<ZonaDeCobertura> getZonasDeCobertura() { return new ArrayList<>(zonasDeCobertura); }
+    public void agregarMuestra(Muestra muestra) {
+        this.muestras.add(muestra);
+        this.agregarMuestraAZonas(muestra);
+    }
+
+    private void agregarMuestraAZonas(Muestra muestra) {
+        for (ZonaCobertura zona : zonasDeCobertura) {
+            if (zona.abarcaA(muestra.getUbicacion())) {
+                zona.agregarMuestra(muestra);
+            }
+        }
+    }
 
     public List<Muestra> buscarMuestras(CriterioBusqueda criterio) {
         return muestras.stream()
@@ -37,4 +44,11 @@ class GestorMuestras {
                 .filter(m -> muestra.getUbicacion().distanciaEnKmA(m.getUbicacion()) < distancia)
                 .toList();
     }
+
+    // Getters
+    public List<Muestra> getMuestras() { return new ArrayList<>(muestras); }
+    public List<Participante> getParticipantes() { return new ArrayList<>(participantes); }
+    public List<Organizacion> getOrganizaciones() { return new ArrayList<>(organizaciones); }
+    public List<ZonaCobertura> getZonasDeCobertura() { return new ArrayList<>(zonasDeCobertura); }
+
 }
