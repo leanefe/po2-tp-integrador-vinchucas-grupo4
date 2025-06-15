@@ -15,6 +15,7 @@ public class Muestra {
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	private Participante recolector;
 	private Ubicacion ubicacion;
+	private List<ZonaCobertura> zonasDePertenencia;
 	
 	public LocalDateTime getFechaCreacion() {
 		return fechaCreacion;
@@ -70,6 +71,7 @@ public class Muestra {
 		this.opiniones = opiniones;
 		this.recolector = recolector;
 		this.ubicacion = ubicacion;
+		this.zonasDePertenencia = new ArrayList<>();
 	}
 	public TipoOpinion resultadoActualOpiniones() { //Ver metodo
 		return getOpiniones().stream()
@@ -96,7 +98,15 @@ public class Muestra {
 	public void restartOpiniones() {
 		this.getOpiniones().clear();
 	}
-	
-	
-	
+
+	public void agregarZona(ZonaCobertura zona) {
+		this.zonasDePertenencia.add(zona);
+	}
+
+	public void notificarValidacion() {
+		for (ZonaCobertura zona : zonasDePertenencia) {
+			zona.avisarValidacionMuestra(this);
+		}
+	}
+	// TODO En el estado correspondiente de la muestra, sumar la llamada al método notificarValidacion cuando la muestra pasa a verificada.
 }
