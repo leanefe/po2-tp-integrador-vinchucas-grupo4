@@ -1,4 +1,5 @@
 
-public enum NivelVerificacion {
 
+public enum NivelVerificacion {
+	VOTADA, VERIFIFICADA;
 }

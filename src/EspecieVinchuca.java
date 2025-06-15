@@ -1,4 +1,5 @@
 
-public enum EspecieVinchuca {
 
+public enum EspecieVinchuca {
+	INFESTANS, SORDIDA, GUASAYANA;
 }

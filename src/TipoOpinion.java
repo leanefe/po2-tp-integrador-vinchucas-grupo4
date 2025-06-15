@@ -1,4 +1,5 @@
 
-public enum TipoOpinion {
 
+public enum TipoOpinion {
+ VINCHUCA, CHINCHE_FOLIADA, PHTIA_CHINCHE, NINGUNA, IMG_POCO_CLARA;
 }
