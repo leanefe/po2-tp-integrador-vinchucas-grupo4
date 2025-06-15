@@ -31,7 +31,7 @@ abstract class Participante {
     public void opinar(Muestra muestra, TipoOpinion tipoOpinion) {
         Opinion nuevaOpinion = new Opinion(this, tipoOpinion, this.getNivel(LocalDate.now()));
         this.opinionesEmitidas.add(nuevaOpinion);
-        muestra.agregarOpinion(nuevaOpinion); // La muestra maneja la adición y cambio de estado
+        muestra.addOpinion(nuevaOpinion); // La muestra maneja la adición y cambio de estado
     }
 
     protected int getCantidadEnviosUltimos30Dias(LocalDate fechaActual) {
