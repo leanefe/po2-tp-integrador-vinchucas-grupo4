@@ -1,49 +1,102 @@
-import java.time.LocalDateTime;
+
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 public class Muestra {
+	private String linkFoto;
+	private Date fechaCreacion;
+	private EspecieVinchuca especie;
+	private EstadoMuestra estado;
+	private List<Opinion> opiniones = new ArrayList<Opinion>();
+	private Participante recolector;
 	private Ubicacion ubicacion;
-	private List<ZonaCobertura> zonasDePertenencia;
-
-	public LocalDateTime getFechaCreacion() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public Date getFechaCreacion() {
+		return fechaCreacion;
 	}
-
-	public LocalDateTime getUltimaFechaVotacion() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
-
-	public Object getNivelVerificacion() {
-		// TODO Auto-generated method stub
-		return null;
+	public EspecieVinchuca getEspecie() {
+		return especie;
 	}
-
-	public Object obtenerResultadoActual() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setEspecie(EspecieVinchuca especie) {
+		this.especie = especie;
 	}
-
-	public void agregarOpinion(Opinion nuevaOpinion) {
-		// TODO Auto-generated method stub
-		
+	public EstadoMuestra getEstado() {
+		return estado;
 	}
-
+	public void setEstado(EstadoMuestra estado) {
+		this.estado = estado;
+	}
+	public List<Opinion> getOpiniones() {
+		return opiniones;
+	}
+	public void setOpiniones(List<Opinion> opiniones) {
+		this.opiniones = opiniones;
+	}
+	public Participante getRecolector() {
+		return recolector;
+	}
+	public void setRecolector(Participante recolector) {
+		this.recolector = recolector;
+	}
 	public Ubicacion getUbicacion() {
 		return ubicacion;
 	}
-
-	public void agregarZona(ZonaCobertura zona) {
-		this.zonasDePertenencia.add(zona);
+	public void setUbicacion(Ubicacion ubicacion) {
+		this.ubicacion = ubicacion;
 	}
-
-	public void notificarValidacion() {
-		for (ZonaCobertura zona : zonasDePertenencia) {
-			zona.avisarValidacionMuestra(this);
-		}
+	public String getLinkFoto() {
+		return linkFoto;
 	}
-		// TODO En el estado correspondiente de la muestra, sumar la llamada al método notificarValidacion cuando la muestra pasa a verificada.
+	public void setLinkFoto(String linkFoto) {
+		this.linkFoto = linkFoto;
+	}
+	
+	
+	public Muestra(String linkFoto, Date fechaCreacion, EspecieVinchuca especie, EstadoMuestra estado,
+			List<Opinion> opiniones, Participante recolector, Ubicacion ubicacion) {
+		super();
+		this.linkFoto = linkFoto;
+		this.fechaCreacion = fechaCreacion;
+		this.especie = especie;
+		this.estado = estado;
+		this.opiniones = opiniones;
+		this.recolector = recolector;
+		this.ubicacion = ubicacion;
+	}
+	public TipoOpinion resultadoActualOpiniones() { //Ver metodo
+		return getOpiniones().stream()
+				.collect(Collectors.groupingBy(Opinion::getTipo, Collectors.counting()))
+				.entrySet().stream()
+				.max(Map.Entry.comparingByValue())
+				.map(Map.Entry::getKey)
+				.orElse(TipoOpinion.NINGUNA);
+	}
+	
+	public void addOpinion(Opinion o) {
+		this.getEstado().addOpinion(this, o);
+	}
+	
+	public void doAddOpinion(Opinion o) {
+		this.getOpiniones().add(o);
+	}
+	
+	public boolean votoUnExperto() {
+		return this.getOpiniones().stream()
+				.anyMatch(o -> o.getNivelConocimiento() == NivelParticipante.EXPERTO);
+	}
+	
+	public void restartOpiniones() {
+		this.getOpiniones().clear();
+	}
+	
+	
+	
 }
-
-

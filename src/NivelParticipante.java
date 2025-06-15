@@ -1,5 +1,5 @@
 
-public enum NivelParticipante {
-	EXPERTO, BASICO
 
+public enum NivelParticipante {
+	BASICO, EXPERTO;
 }
