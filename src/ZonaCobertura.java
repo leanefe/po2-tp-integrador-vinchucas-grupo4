@@ -21,6 +21,10 @@ public class ZonaCobertura {
         gestor.avisoPorNuevaMuestra(this, muestra);
     }
 
+    public void avisarValidacionMuestra(Muestra muestra) {
+        gestor.avisoPorMuestraValidada(this, muestra);
+    }
+
     public boolean abarcaA(Ubicacion ubicacion) {
         return this.epicentro.distanciaEnKmA(ubicacion) <= this.radio;
     }
@@ -32,11 +36,11 @@ public class ZonaCobertura {
         return epicentro.distanciaEnKmA(zona.getEpicentro()) <= this.radio - zona.getRadio();
     }
 
-    private double getRadio() {
+    public double getRadio() {
         return radio;
     }
 
-    private Ubicacion getEpicentro() {
+    public Ubicacion getEpicentro() {
         return epicentro;
     }
 }

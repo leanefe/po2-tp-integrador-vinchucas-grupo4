@@ -17,13 +17,14 @@ class GestorMuestras {
 
     public void agregarMuestra(Muestra muestra) {
         this.muestras.add(muestra);
-        this.agregarMuestraAZonas(muestra);
+        this.relacionarMuestraYZonas(muestra);
     }
 
-    private void agregarMuestraAZonas(Muestra muestra) {
+    private void relacionarMuestraYZonas(Muestra muestra) {
         for (ZonaCobertura zona : zonasDeCobertura) {
             if (zona.abarcaA(muestra.getUbicacion())) {
                 zona.agregarMuestra(muestra);
+                muestra.agregarZona(zona);
             }
         }
     }
