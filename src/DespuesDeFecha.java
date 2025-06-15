@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-class DespuesDeFecha implements IComparadorDeFechas {
+public class DespuesDeFecha implements IComparadorDeFechas {
     private final LocalDate fechaLimite;
 
     public DespuesDeFecha(LocalDate fechaLimite) {
