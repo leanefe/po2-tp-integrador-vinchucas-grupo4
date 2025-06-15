@@ -1,7 +1,7 @@
 
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,17 +9,17 @@ import java.util.stream.Collectors;
 
 public class Muestra {
 	private String linkFoto;
-	private Date fechaCreacion;
+	private LocalDateTime fechaCreacion;
 	private EspecieVinchuca especie;
 	private EstadoMuestra estado;
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	private Participante recolector;
 	private Ubicacion ubicacion;
 	
-	public Date getFechaCreacion() {
+	public LocalDateTime getFechaCreacion() {
 		return fechaCreacion;
 	}
-	public void setFechaCreacion(Date fechaCreacion) {
+	public void setFechaCreacion(LocalDateTime fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
 	public EspecieVinchuca getEspecie() {
@@ -60,7 +60,7 @@ public class Muestra {
 	}
 	
 	
-	public Muestra(String linkFoto, Date fechaCreacion, EspecieVinchuca especie, EstadoMuestra estado,
+	public Muestra(String linkFoto, LocalDateTime fechaCreacion, EspecieVinchuca especie, EstadoMuestra estado,
 			List<Opinion> opiniones, Participante recolector, Ubicacion ubicacion) {
 		super();
 		this.linkFoto = linkFoto;

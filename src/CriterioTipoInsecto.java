@@ -8,6 +8,6 @@ class CriterioTipoInsecto implements CriterioBusqueda {
 
     @Override
     public boolean cumple(Muestra muestra) {
-        return muestra.obtenerResultadoActual().equals(tipoInsectoDetectado);
+        return muestra.resultadoActualOpiniones().equals(tipoInsectoDetectado);
     }
 }

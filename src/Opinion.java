@@ -1,13 +1,14 @@
 
 
-import java.util.Date;
+
+import java.time.LocalDateTime;
 
 public class Opinion {
-	private Date fechaCreacion;
+	private LocalDateTime fechaCreacion;
 	private TipoOpinion tipo;
 	private NivelParticipante nivelConocimiento;
 	
-	public Date getFechaCreacion() {
+	public LocalDateTime getFechaCreacion() {
 		return fechaCreacion;
 	}
 	
@@ -22,7 +23,7 @@ public class Opinion {
 		this.nivelConocimiento = nivelconocimiento;
 	}
 
-	public Opinion(Date fechaCreacion, TipoOpinion tipo, NivelParticipante nivelconocimiento) {
+	public Opinion(LocalDateTime fechaCreacion, TipoOpinion tipo, NivelParticipante nivelconocimiento) {
 		super();
 		this.fechaCreacion = fechaCreacion;
 		this.tipo = tipo;
