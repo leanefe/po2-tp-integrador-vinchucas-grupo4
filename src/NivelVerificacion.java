@@ -1,5 +1,5 @@
 
 
 public enum NivelVerificacion {
-	VOTADA, VERIFIFICADA;
+	VOTADA, VERIFICADA;
 }

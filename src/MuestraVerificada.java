@@ -4,7 +4,7 @@
 
 public class MuestraVerificada implements EstadoMuestra{
 	
-	private NivelVerificacion nivelDeVerificacion = NivelVerificacion.VERIFIFICADA;
+	private NivelVerificacion nivelDeVerificacion = NivelVerificacion.VERIFICADA;
 	
 	public NivelVerificacion getNivelDeVerificacion() {
 		return nivelDeVerificacion;
