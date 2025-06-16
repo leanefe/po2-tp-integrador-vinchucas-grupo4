@@ -1,3 +1,3 @@
 public interface FuncionalidadExterna {
-    public void nuevoEvento(Organizacion org, ZonaCobertura zona, Muestra muestra);
+    public void nuevoEvento(IOrganizacion org, ZonaCobertura zona, Muestra muestra);
 }

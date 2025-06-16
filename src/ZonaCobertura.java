@@ -6,14 +6,14 @@ public class ZonaCobertura {
     private Ubicacion epicentro;
     private double radio;
     private List<Muestra> muestras;
-    private GestorEventosEnZonas gestor;
+    private GestorEventosEnZona gestor;
 
-    public ZonaCobertura(String nombre, Ubicacion epicentro, double radio) {
+    public ZonaCobertura(String nombre, Ubicacion epicentro, double radio, GestorEventosEnZona gestor) {
         this.nombre = nombre;
         this.epicentro = epicentro;
         this.radio = radio;
-        this.muestras = new ArrayList<Muestra>();
-        this.gestor = new GestorEventosEnZonas();
+        this.muestras = new ArrayList<>();
+        this.gestor = gestor;
     }
 
     public void agregarMuestra(Muestra muestra) {

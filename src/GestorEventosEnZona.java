@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestorEventosEnZonas {
+public class GestorEventosEnZona {
     private List<IOrganizacion> suscriptores;
 
-    public GestorEventosEnZonas() {
+    public GestorEventosEnZona() {
         suscriptores = new ArrayList<>();
     }
 
