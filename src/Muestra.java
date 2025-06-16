@@ -20,15 +20,11 @@ public class Muestra {
 	public LocalDateTime getFechaCreacion() {
 		return fechaCreacion;
 	}
-	public void setFechaCreacion(LocalDateTime fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
+	
 	public EspecieVinchuca getEspecie() {
 		return especie;
 	}
-	public void setEspecie(EspecieVinchuca especie) {
-		this.especie = especie;
-	}
+	
 	public EstadoMuestra getEstado() {
 		return estado;
 	}
@@ -36,39 +32,28 @@ public class Muestra {
 		this.estado = estado;
 	}
 	public List<Opinion> getOpiniones() {
-		return opiniones;
+		return new ArrayList<>(opiniones);
 	}
-	public void setOpiniones(List<Opinion> opiniones) {
-		this.opiniones = opiniones;
-	}
+	
 	public Participante getRecolector() {
 		return recolector;
 	}
-	public void setRecolector(Participante recolector) {
-		this.recolector = recolector;
-	}
+	
 	public Ubicacion getUbicacion() {
 		return ubicacion;
 	}
-	public void setUbicacion(Ubicacion ubicacion) {
-		this.ubicacion = ubicacion;
-	}
+	
 	public String getLinkFoto() {
 		return linkFoto;
 	}
-	public void setLinkFoto(String linkFoto) {
-		this.linkFoto = linkFoto;
-	}
 	
-	
-	public Muestra(String linkFoto, LocalDateTime fechaCreacion, EspecieVinchuca especie, EstadoMuestra estado,
-			List<Opinion> opiniones, Participante recolector, Ubicacion ubicacion) {
+	public Muestra(String linkFoto, EspecieVinchuca especie, Participante recolector, Ubicacion ubicacion) {
 		super();
 		this.linkFoto = linkFoto;
-		this.fechaCreacion = fechaCreacion;
+		this.fechaCreacion = LocalDateTime.now();
 		this.especie = especie;
 		this.estado = new MuestraBasica();
-		this.opiniones = opiniones;
+		this.opiniones = new ArrayList<>();
 		this.recolector = recolector;
 		this.ubicacion = ubicacion;
 		this.zonasDePertenencia = new ArrayList<>();
@@ -90,13 +75,8 @@ public class Muestra {
 		this.getOpiniones().add(o);
 	}
 	
-	public boolean votoUnExperto() {
-		return this.getOpiniones().stream()
-				.anyMatch(o -> o.getNivelConocimiento() == NivelParticipante.EXPERTO);
-	}
-	
 	public void restartOpiniones() {
-		this.getOpiniones().clear();
+		this.opiniones.clear();
 	}
 
 	public void agregarZona(ZonaCobertura zona) {
@@ -108,7 +88,6 @@ public class Muestra {
 			zona.avisarValidacionMuestra(this);
 		}
 	}
-	// TODO En el estado correspondiente de la muestra, sumar la llamada al método notificarValidacion cuando la muestra pasa a verificada.
 	
 	public NivelVerificacion getNivelVerificacion() {
 		return this.getEstado().getNivel();
