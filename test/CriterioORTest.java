@@ -1,10 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import ar.edu.unq.vinchuca.criterio.CriterioBusqueda;
-import ar.edu.unq.vinchuca.criterio.CriterioOR;
-import ar.edu.unq.vinchuca.model.Muestra;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
