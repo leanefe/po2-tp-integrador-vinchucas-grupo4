@@ -19,13 +19,9 @@ public class Opinion {
 	public NivelParticipante getNivelConocimiento() {
 		return nivelConocimiento;
 	}
-	public void setNivelconocimiento(NivelParticipante nivelconocimiento) {
-		this.nivelConocimiento = nivelconocimiento;
-	}
 
-	public Opinion(LocalDateTime fechaCreacion, TipoOpinion tipo, NivelParticipante nivelconocimiento) {
-		super();
-		this.fechaCreacion = fechaCreacion;
+	public Opinion(TipoOpinion tipo, NivelParticipante nivelconocimiento) {
+		this.fechaCreacion = LocalDateTime.now();
 		this.tipo = tipo;
 		this.nivelConocimiento = nivelconocimiento;
 	}

@@ -19,7 +19,7 @@ public class ObserverTest {
     void setUp() {
         gestorMuestras = new GestorMuestras();
         recolector = mock(Participante.class);
-        m1 = new Muestra("url", LocalDateTime.now(), EspecieVinchuca.SORDIDA, recolector, new Ubicacion(-34.706108, -58.276997));
+        m1 = new Muestra("url", EspecieVinchuca.SORDIDA, recolector, new Ubicacion(-34.706108, -58.276997));
         gestorEventos = new GestorEventosEnZona();
         zona = new ZonaCobertura("zona", new Ubicacion(-34.711873, -58.281293), 20, gestorEventos);
         accionNuevaMuestra = mock(FuncionalidadExterna.class);

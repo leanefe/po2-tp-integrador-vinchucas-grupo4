@@ -18,6 +18,7 @@ class GestorMuestras {
     public void agregarMuestra(Muestra muestra) {
         this.muestras.add(muestra);
         this.relacionarMuestraYZonas(muestra);
+        muestra.getRecolector().agregarMuestraEnviada(muestra);
     }
 
     private void relacionarMuestraYZonas(Muestra muestra) {

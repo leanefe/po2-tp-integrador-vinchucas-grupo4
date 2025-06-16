@@ -21,15 +21,12 @@ abstract class Participante {
 
     public abstract NivelParticipante getNivel(LocalDate fechaActual);
 
-    public Muestra enviarMuestra(EspecieVinchuca especie, String fotoUrl, Ubicacion ubicacion) {
-        Muestra nuevaMuestra = new Muestra(especie, fotoUrl, ubicacion, this);
-        this.muestrasEnviadas.add(nuevaMuestra);
-        // El GestorMuestras se encargará de registrarla globalmente
-        return nuevaMuestra;
+    public void agregarMuestraEnviada(Muestra muestra) {
+        muestrasEnviadas.add(muestra);
     }
 
     public void opinar(Muestra muestra, TipoOpinion tipoOpinion) {
-        Opinion nuevaOpinion = new Opinion(this, tipoOpinion, this.getNivel(LocalDate.now()));
+        Opinion nuevaOpinion = new Opinion(tipoOpinion, this.getNivel(LocalDate.now()));
         this.opinionesEmitidas.add(nuevaOpinion);
         muestra.addOpinion(nuevaOpinion); // La muestra maneja la adición y cambio de estado
     }
