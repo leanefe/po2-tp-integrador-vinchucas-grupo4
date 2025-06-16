@@ -67,7 +67,7 @@ public class Muestra {
 		this.linkFoto = linkFoto;
 		this.fechaCreacion = fechaCreacion;
 		this.especie = especie;
-		this.estado = estado;
+		this.estado = new MuestraBasica();
 		this.opiniones = opiniones;
 		this.recolector = recolector;
 		this.ubicacion = ubicacion;
@@ -109,4 +109,12 @@ public class Muestra {
 		}
 	}
 	// TODO En el estado correspondiente de la muestra, sumar la llamada al método notificarValidacion cuando la muestra pasa a verificada.
+	
+	public NivelVerificacion getNivelVerificacion() {
+		return this.getEstado().getNivel();
+	}
+	
+	public LocalDateTime getUltimaFechaVotacion() {
+		return this.getOpiniones().getLast().getFechaCreacion();
+	}
 }
