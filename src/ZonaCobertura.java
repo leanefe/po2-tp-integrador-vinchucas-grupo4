@@ -25,6 +25,9 @@ public class ZonaCobertura {
         gestor.avisoPorMuestraValidada(this, muestra);
     }
 
+    /**
+     * Indica si la ubicación pasada por parámetro está dentro de esta zona.
+     */
     public boolean abarcaA(Ubicacion ubicacion) {
         return this.epicentro.distanciaEnKmA(ubicacion) <= this.radio;
     }
@@ -33,7 +36,7 @@ public class ZonaCobertura {
      * Dos zonas se solapan si la distancia entre sus centros es menor que la suma de sus radios.
      */
     public boolean solapaA(ZonaCobertura zona) {
-        return epicentro.distanciaEnKmA(zona.getEpicentro()) <= this.radio - zona.getRadio();
+        return epicentro.distanciaEnKmA(zona.getEpicentro()) <= this.radio + zona.getRadio();
     }
 
     public double getRadio() {
