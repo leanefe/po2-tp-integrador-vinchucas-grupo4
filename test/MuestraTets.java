@@ -62,7 +62,7 @@ class MuestraTets {
 	}
 	
 	@Test
-	void AgregoTresOpinionesYElTipoDeLaOpinionEsNingunaPqNoCoinciden() { //Ver caso empate Lo deje asi para que pasen los test
+	void AgregoTresOpinionesYElTipoDeLaOpinionEsNingunaPqNoCoinciden() { 
 		when(o1.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
 		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
 		when(o2.getTipo()).thenReturn(TipoOpinion.IMG_POCO_CLARA);
