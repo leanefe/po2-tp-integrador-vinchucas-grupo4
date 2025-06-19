@@ -34,14 +34,14 @@ abstract class Participante {
     protected int getCantidadEnviosUltimos30Dias(LocalDate fechaActual) {
         LocalDateTime fechaLimite = fechaActual.minusDays(30).atStartOfDay();
         return (int) muestrasEnviadas.stream()
-            .filter(m -> m.getFechaCreacion().isAfter(fechaLimite))
+            .filter(m -> !m.getFechaCreacion().isBefore(fechaLimite))
             .count();
     }
 
     protected int getCantidadOpinionesUltimos30Dias(LocalDate fechaActual) {
         LocalDateTime fechaLimite = fechaActual.minusDays(30).atStartOfDay();
         return (int) opinionesEmitidas.stream()
-            .filter(o -> o.getFechaCreacion().isAfter(fechaLimite))
+            .filter(o -> !o.getFechaCreacion().isBefore(fechaLimite))
             .count();
     }
 }
