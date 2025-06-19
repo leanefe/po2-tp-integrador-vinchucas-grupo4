@@ -18,9 +18,10 @@ public class MuestraDeExpertos implements EstadoMuestra{
 	public void addOpinion(Muestra m, Opinion o) {
 		if(this.laOpinionEsDeExperto(o)) {
 			m.doAddOpinion(o);
+			this.verificarSiPasaDeEstado(m, o);
 		} else {}
 		
-		this.verificarSiPasaDeEstado(m, o);
+		//this.verificarSiPasaDeEstado(m, o);
 	}
 	
 	@Override
@@ -31,6 +32,7 @@ public class MuestraDeExpertos implements EstadoMuestra{
 	public void verificarSiPasaDeEstado(Muestra m, Opinion o) {
 		if(m.resultadoActualOpiniones() == o.getTipo()) { // Como cuando cambia a muestra de expertos se elimanan las opiniones de los particpantes basicos cuandos suceda la primera coincidencia de qie los expertos voten los mismo va a cambiar de estado.
 			m.setEstado(new MuestraVerificada());
+			m.notificarValidacion();
 		}
 	}
 

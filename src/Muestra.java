@@ -32,7 +32,8 @@ public class Muestra {
 		this.estado = estado;
 	}
 	public List<Opinion> getOpiniones() {
-		return new ArrayList<>(opiniones);
+		//return new ArrayList<Opinion>(opiniones);
+		return opiniones; 
 	}
 	
 	public Participante getRecolector() {
@@ -58,13 +59,27 @@ public class Muestra {
 		this.ubicacion = ubicacion;
 		this.zonasDePertenencia = new ArrayList<>();
 	}
-	public TipoOpinion resultadoActualOpiniones() { //Ver metodo
-		return getOpiniones().stream()
-				.collect(Collectors.groupingBy(Opinion::getTipo, Collectors.counting()))
-				.entrySet().stream()
-				.max(Map.Entry.comparingByValue())
-				.map(Map.Entry::getKey)
-				.orElse(TipoOpinion.NINGUNA);
+	public TipoOpinion resultadoActualOpiniones() {
+		Map<TipoOpinion, Long> conteo = contarOpiniones();
+		
+		List<Map.Entry<TipoOpinion, Long>> ordenados = conteo.entrySet().stream()
+				.sorted(Map.Entry.<TipoOpinion, Long>comparingByValue().reversed())
+				.toList();
+		
+		if (ordenados.size() < 1) {
+			return TipoOpinion.NINGUNA;
+		}
+		
+		if (ordenados.size() > 1 && ordenados.get(0).getValue().equals(ordenados.get(1).getValue())) {
+			return TipoOpinion.NINGUNA; //hay empate.
+		}
+		
+		return ordenados.get(0).getKey();
+	}
+	
+	private Map<TipoOpinion, Long> contarOpiniones(){
+		return this.getOpiniones().stream()
+				.collect(Collectors.groupingBy(Opinion::getTipo, Collectors.counting()));
 	}
 	
 	public void addOpinion(Opinion o) {

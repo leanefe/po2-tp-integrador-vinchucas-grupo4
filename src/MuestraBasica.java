@@ -19,7 +19,7 @@ public class MuestraBasica implements EstadoMuestra {
 	public void addOpinion(Muestra m, Opinion o) {
 	if	(this.laOpinionEsDeExperto(o)){
 		this.pasarDeEstado(m,o);
-	} else {}
+	} else {m.doAddOpinion(o);}
 		
 	}
 	
