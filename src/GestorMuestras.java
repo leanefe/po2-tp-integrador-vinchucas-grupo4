@@ -5,19 +5,18 @@ import java.util.stream.Collectors;
 class GestorMuestras {
     private List<Muestra> muestras;
     private List<Participante> participantes;
-    private List<Organizacion> organizaciones;
     private List<ZonaCobertura> zonasDeCobertura;
 
     public GestorMuestras() {
         this.muestras = new ArrayList<>();
         this.participantes = new ArrayList<>();
-        this.organizaciones = new ArrayList<>();
         this.zonasDeCobertura = new ArrayList<>();
     }
 
     public void agregarMuestra(Muestra muestra) {
         this.muestras.add(muestra);
         this.relacionarMuestraYZonas(muestra);
+        muestra.getRecolector().agregarMuestraEnviada(muestra);
     }
 
     private void relacionarMuestraYZonas(Muestra muestra) {
@@ -29,17 +28,16 @@ class GestorMuestras {
         }
     }
 
+    public void agregarZona(ZonaCobertura zona) {
+        this.zonasDeCobertura.add(zona);
+    }
+
     public List<Muestra> buscarMuestras(CriterioBusqueda criterio) {
         return muestras.stream()
                        .filter(criterio::cumple) 
                        .collect(Collectors.toList());
     }
 
-    /**
-     * @param muestra
-     * @param distancia en Km
-     * @return Las muestras obtenidas a menor distancia que la dada.
-     */
     public List<Muestra> buscarMuestrasAMenosDe(Muestra muestra, double distancia) {
         return muestras.stream()
                 .filter(m -> muestra.getUbicacion().distanciaEnKmA(m.getUbicacion()) < distancia)
@@ -47,9 +45,8 @@ class GestorMuestras {
     }
 
     // Getters
-    public List<Muestra> getMuestras() { return new ArrayList<>(muestras); }
-    public List<Participante> getParticipantes() { return new ArrayList<>(participantes); }
-    public List<Organizacion> getOrganizaciones() { return new ArrayList<>(organizaciones); }
-    public List<ZonaCobertura> getZonasDeCobertura() { return new ArrayList<>(zonasDeCobertura); }
+    //public List<Muestra> getMuestras() { return new ArrayList<>(muestras); }
+    //public List<Participante> getParticipantes() { return new ArrayList<>(participantes); }
+    //public List<ZonaCobertura> getZonasDeCobertura() { return new ArrayList<>(zonasDeCobertura); }
 
 }

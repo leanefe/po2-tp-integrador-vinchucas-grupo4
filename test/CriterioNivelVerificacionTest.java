@@ -1,9 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import ar.edu.unq.vinchuca.criterio.CriterioNivelVerificacion;
-import ar.edu.unq.vinchuca.model.Muestra;
-import ar.edu.unq.vinchuca.model.NivelVerificacion;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
