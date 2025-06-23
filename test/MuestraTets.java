@@ -17,13 +17,13 @@ class MuestraTets {
 	
 	@BeforeEach
 	void setUp() {
-		muestra = new Muestra("fotoURL", EspecieVinchuca.INFESTANS, p1,u1);
 		p1 = mock(Participante.class);
 		o1 = mock(Opinion.class);
 		o2 = mock(Opinion.class);
 		o3 = mock(Opinion.class);
 		u1 = mock(Ubicacion.class);
 		z1 = mock(ZonaCobertura.class);
+		muestra = new Muestra("fotoURL", EspecieVinchuca.INFESTANS, p1,u1);
 	}
 
 	@Test
@@ -57,6 +57,7 @@ class MuestraTets {
 		when(o2.getTipo()).thenReturn(TipoOpinion.VINCHUCA);
 		when(o2.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
 		muestra.addOpinion(o1);
+		muestra.getUltimaFechaVotacion();
 		muestra.addOpinion(o2);
 		assertEquals(TipoOpinion.NINGUNA, muestra.resultadoActualOpiniones());
 	}
@@ -73,16 +74,6 @@ class MuestraTets {
 		muestra.addOpinion(o2);
 		muestra.addOpinion(o3);
 		assertEquals(TipoOpinion.NINGUNA, muestra.resultadoActualOpiniones());
-	}
-	
-	@Test
-	void UnexpertoOpinaYcamadabiaDeEstado() {
-		EstadoMuestra estado = muestra.getEstado();
-		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.EXPERTO);
-		when(o1.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
-		muestra.addOpinion(o1);
-		assertNotEquals(estado, muestra.getEstado());
-		
 	}
 	
 	@Test
@@ -116,13 +107,15 @@ class MuestraTets {
 	
 	@Test
 	void DosxpertosOpinanYCoincidenYcambiaDeEstado() {
+		assertEquals(NivelVerificacion.VOTADA, muestra.getNivelVerificacion());
 		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.EXPERTO);
 		when(o1.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
 		when(o2.getNivelConocimiento()).thenReturn(NivelParticipante.EXPERTO);
 		when(o2.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
-		muestra.addOpinion(o1);
-		muestra.addOpinion(o2);
-		assertEquals(NivelVerificacion.VERIFICADA, muestra.getEstado().getNivel());
+		muestra.addOpinion(o1); // Pasa a Muestra de Expertos
+		assertEquals(NivelVerificacion.VOTADA, muestra.getNivelVerificacion());
+		muestra.addOpinion(o2); // Pasa a Muestra Verificada
+		assertEquals(NivelVerificacion.VERIFICADA, muestra.getNivelVerificacion());
 	}
 	
 	@Test 
@@ -139,7 +132,6 @@ class MuestraTets {
 	
 	@Test
 	void MuestraCambiaDeEstadoYAvisaALasZonaDeCobertura() {
-		muestra.setEstado(new MuestraDeExpertos());
 		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.EXPERTO);
 		when(o1.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
 		when(o2.getNivelConocimiento()).thenReturn(NivelParticipante.EXPERTO);
@@ -149,6 +141,26 @@ class MuestraTets {
 		muestra.addOpinion(o2);
 		verify(z1, atLeastOnce()).avisarValidacionMuestra(muestra);;
 	}
-	
 
+
+	@Test
+	void dosOpinionesFrenteAUnaTest() {
+		when(o1.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
+		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
+		when(o2.getTipo()).thenReturn(TipoOpinion.VINCHUCA);
+		when(o2.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
+		when(o3.getTipo()).thenReturn(TipoOpinion.VINCHUCA);
+		when(o3.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
+		muestra.addOpinion(o1);
+		muestra.addOpinion(o2);
+		muestra.addOpinion(o3);
+		assertEquals(TipoOpinion.VINCHUCA, muestra.resultadoActualOpiniones());
+	}
+
+	@Test
+	void testGetters() {
+		muestra.getFechaCreacion();
+		assertEquals(p1, muestra.getRecolector());
+		assertEquals(u1, muestra.getUbicacion());
+	}
 }

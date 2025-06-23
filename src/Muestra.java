@@ -26,22 +26,6 @@ public class Muestra {
 	}
 	
 	/**
-	 * getter de Especie.
-	 * @return EspecieVinchuca
-	 */
-	public EspecieVinchuca getEspecie() {
-		return especie;
-	}
-	
-	/**
-	 * getter de Esatdo.
-	 * @return EstadoMuestra
-	 */
-	public EstadoMuestra getEstado() {
-		return estado;
-	}
-	
-	/**
 	 * setter de Estado.
 	 * @param estado
 	 */
@@ -54,7 +38,7 @@ public class Muestra {
 	 * @return List<Opinion>
 	 */
 	public List<Opinion> getOpiniones() {
-		return opiniones; 
+		return new ArrayList<>(opiniones);
 	}
 	
 	/**
@@ -72,21 +56,13 @@ public class Muestra {
 	public Ubicacion getUbicacion() {
 		return ubicacion;
 	}
-	
-	/**
-	 * getter LinkDeFoto
-	 * @return String
-	 */
-	public String getLinkFoto() {
-		return linkFoto;
-	}
-	
+
 	/**
 	 * getter NivelVerificacion.
 	 * @return NivelVerificacion
 	 */
 	public NivelVerificacion getNivelVerificacion() {
-		return this.getEstado().getNivel();
+		return this.estado.getNivel();
 	}
 	
 	/**
@@ -117,32 +93,29 @@ public class Muestra {
 	}
 	
 	/**
-	 * Calcula cuando se lo llama al metodo el resultado actual de la muestra, dependiendo de los que votaron en esa muestra se calcula y devulve el tipo de opinion.
-	 * @return TipoOpinion
+	 * @return La opinión más votada en la muestra hasta el momento. En caso de empate, devuelve NINGUNA.
 	 */
 	public TipoOpinion resultadoActualOpiniones() {
-		Map<TipoOpinion, Long> conteo = contarOpiniones();
-		
-		List<Map.Entry<TipoOpinion, Long>> ordenados = conteo.entrySet().stream()
+
+		if (this.opiniones.isEmpty()) { return TipoOpinion.NINGUNA; }
+
+		// Se ordena por fuera del método para que sea un poco más legible
+		List<Map.Entry<TipoOpinion, Long>> conteoOrdenado = this.getConteoOpiniones().entrySet().stream()
 				.sorted(Map.Entry.<TipoOpinion, Long>comparingByValue().reversed())
 				.toList();
-		
-		if (ordenados.size() < 1) {
-			return TipoOpinion.NINGUNA;
+
+		if (conteoOrdenado.size() > 1 && conteoOrdenado.get(0).getValue() == conteoOrdenado.get(1).getValue()) {
+			return TipoOpinion.NINGUNA; // Caso de empate
+		} else {
+			return conteoOrdenado.getFirst().getKey();
 		}
-		
-		if (ordenados.size() > 1 && ordenados.get(0).getValue().equals(ordenados.get(1).getValue())) {
-			return TipoOpinion.NINGUNA; //hay empate.
-		}
-		
-		return ordenados.get(0).getKey();
 	}
 	
 	/**
 	 * Utiliza un map para contar las opiniones donde la key es el tipo de la opinion y la clave la cantidad que lo votaron.
 	 * @return Map<TipoOpinion, Long>
 	 */
-	private Map<TipoOpinion, Long> contarOpiniones(){
+	private Map<TipoOpinion, Long> getConteoOpiniones(){
 		return this.getOpiniones().stream()
 				.collect(Collectors.groupingBy(Opinion::getTipo, Collectors.counting()));
 	}
@@ -152,7 +125,7 @@ public class Muestra {
 	 * @param Opinion
 	 */
 	public void addOpinion(Opinion o) {
-		this.getEstado().addOpinion(this, o);
+		this.estado.addOpinion(this, o);
 	}
 	
 	/**
@@ -160,7 +133,7 @@ public class Muestra {
 	 * @param Opinion
 	 */
 	public void doAddOpinion(Opinion o) {
-		this.getOpiniones().add(o);
+		this.opiniones.add(o);
 	}
 	
 	/**
@@ -179,7 +152,7 @@ public class Muestra {
 	}
 	
 	/**
-	 * Notifica a todas las Zonas de Cobertura que la muestra cambio de estado a valido, es decir se valido la muestra.
+	 * En caso de haberse validado, lo notifica a sus Zonas de Cobertura.
 	 */
 	public void notificarValidacion() {
 		for (ZonaCobertura zona : zonasDePertenencia) {

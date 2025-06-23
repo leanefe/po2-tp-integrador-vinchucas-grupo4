@@ -20,26 +20,24 @@ public class MuestraBasica implements EstadoMuestra {
 	 */
 	@Override
 	public void addOpinion(Muestra m, Opinion o) {
-	if	(this.laOpinionEsDeExperto(o)){
-		this.pasarDeEstado(m,o);
-	} else {m.doAddOpinion(o);}
-	
-	/**
-	 * La muestra pasa de estado MuestraDeExpertos, eliminando las opniones anteriores y agregando la nueva.
-	 */
+		if	(this.laOpinionEsDeExperto(o)){
+			this.pasarDeEstado(m,o);
+		} else { m.doAddOpinion(o); }
 	}
-	
-	public void pasarDeEstado(Muestra m, Opinion o) {
-			m.setEstado(new MuestraDeExpertos());
-			m.restartOpiniones(); //elimina las opinines de los participantes basicos que para despues calcular su resultado actual sea correcto.
-			m.doAddOpinion(o);
-	}
-	
+
 	/**
 	 * Valida si la opnion es de un experto o no.
 	 */
-	@Override
-	public boolean laOpinionEsDeExperto(Opinion o) {
+	private boolean laOpinionEsDeExperto(Opinion o) {
 		return o.getNivelConocimiento() == NivelParticipante.EXPERTO;
+	}
+
+	/**
+	 * La muestra pasa de estado MuestraDeExpertos, eliminando las opniones anteriores y agregando la nueva.
+	 */
+	private void pasarDeEstado(Muestra m, Opinion o) {
+			m.setEstado(new MuestraDeExpertos());
+			m.restartOpiniones(); //elimina las opinines de los participantes basicos para que después el cálculo del resultado actual sea correcto.
+			m.doAddOpinion(o);
 	}
 }

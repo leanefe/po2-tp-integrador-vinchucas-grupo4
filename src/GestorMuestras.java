@@ -43,10 +43,4 @@ class GestorMuestras {
                 .filter(m -> muestra.getUbicacion().distanciaEnKmA(m.getUbicacion()) < distancia)
                 .toList();
     }
-
-    // Getters
-    //public List<Muestra> getMuestras() { return new ArrayList<>(muestras); }
-    //public List<Participante> getParticipantes() { return new ArrayList<>(participantes); }
-    //public List<ZonaCobertura> getZonasDeCobertura() { return new ArrayList<>(zonasDeCobertura); }
-
 }
