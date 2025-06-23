@@ -4,21 +4,14 @@
 public class MuestraDeExpertos implements EstadoMuestra{
 	
 	private NivelVerificacion nivelDeVerificacion = NivelVerificacion.VOTADA;
-	
-	/**
-	 * getter Nivel de Verficacion
-	 * @return NivelVerificacion
-	 */
-	public NivelVerificacion getNivelDeVerificacion() {
-		return nivelDeVerificacion;
-	}
+
 	
 	/**
 	 * getter Nivel de verficacion.
 	 */
 	@Override
 	public NivelVerificacion getNivel() {
-		return this.getNivelDeVerificacion();
+		return nivelDeVerificacion;
 	}
 	
 	/**

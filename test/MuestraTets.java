@@ -126,7 +126,7 @@ class MuestraTets {
 	}
 	
 	@Test 
-	void MuestraEnEstadoVerificadoNoPuedeVotarUnBasico() {
+	void MuestraEnEstadoVerificadoNoSePuedeVotar() {
 		muestra.setEstado(new MuestraVerificada());
 		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
 		when(o1.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
@@ -134,7 +134,7 @@ class MuestraTets {
 		when(o2.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
 		muestra.addOpinion(o1);
 		muestra.addOpinion(o2);
-		assertEquals(1, muestra.getOpiniones().size());
+		assertEquals(0, muestra.getOpiniones().size());
 	}
 	
 	@Test
