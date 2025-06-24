@@ -1,7 +1,9 @@
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,7 +18,27 @@ public class Muestra {
 	private Participante recolector;
 	private Ubicacion ubicacion;
 	private List<ZonaCobertura> zonasDePertenencia;
-	
+
+	/**
+	 * Constructor de la clase Muestra
+	 * @param linkFoto
+	 * @param especie
+	 * @param recolector
+	 * @param ubicacion
+	 */
+	public Muestra(String linkFoto, EspecieVinchuca especie, Participante recolector, Ubicacion ubicacion) {
+		super();
+		this.linkFoto = linkFoto;
+		this.fechaCreacion = LocalDateTime.now();
+		this.especie = especie;
+		this.estado = new MuestraBasica();
+		this.recolector = recolector;
+		this.opiniones = new ArrayList<>();
+		this.opiniones.add(new Opinion(TipoOpinion.VINCHUCA, recolector.getNivel(LocalDate.now()))); // La opinión de quien subió la foto cuenta.
+		this.ubicacion = ubicacion;
+		this.zonasDePertenencia = new ArrayList<>();
+	}
+
 	/**
 	 * getter de Fecha De Creacion.
 	 * @return LocalDateTime
@@ -74,32 +96,13 @@ public class Muestra {
 	}
 	
 	/**
-	 * Constructor de la clase Muestra
-	 * @param linkFoto
-	 * @param especie
-	 * @param recolector
-	 * @param ubicacion
-	 */
-	public Muestra(String linkFoto, EspecieVinchuca especie, Participante recolector, Ubicacion ubicacion) {
-		super();
-		this.linkFoto = linkFoto;
-		this.fechaCreacion = LocalDateTime.now();
-		this.especie = especie;
-		this.estado = new MuestraBasica();
-		this.opiniones = new ArrayList<>();
-		this.recolector = recolector;
-		this.ubicacion = ubicacion;
-		this.zonasDePertenencia = new ArrayList<>();
-	}
-	
-	/**
 	 * @return La opinión más votada en la muestra hasta el momento. En caso de empate, devuelve NINGUNA.
 	 */
 	public TipoOpinion resultadoActualOpiniones() {
 
-		if (this.opiniones.isEmpty()) { return TipoOpinion.NINGUNA; }
+		if (this.opiniones.size() == 1) { return this.opiniones.getFirst().getTipo(); }
 
-		// Se ordena por fuera del método para que sea un poco más legible
+		// Se ordena por fuera del método getConteoOpiniones para que sea un poco más legible
 		List<Map.Entry<TipoOpinion, Long>> conteoOrdenado = this.getConteoOpiniones().entrySet().stream()
 				.sorted(Map.Entry.<TipoOpinion, Long>comparingByValue().reversed())
 				.toList();

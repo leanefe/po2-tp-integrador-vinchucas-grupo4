@@ -27,16 +27,11 @@ class MuestraTets {
 	}
 
 	@Test
-	void SinOpinionesElTipoEsNinguna() {
-		assertEquals(TipoOpinion.NINGUNA, muestra.resultadoActualOpiniones());
-	}
-	
-	@Test
-	void AgregoOpinionYElTipoEsDeLaOpinionQueAgregue() {
+	void seAgregaOpinionDistintaYEmpatanTest() {
 		when(o1.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
 		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
 		muestra.addOpinion(o1);
-		assertEquals(TipoOpinion.PHTIA_CHINCHE, muestra.resultadoActualOpiniones());
+		assertEquals(TipoOpinion.NINGUNA, muestra.resultadoActualOpiniones());
 	}
 	
 	@Test
@@ -48,18 +43,6 @@ class MuestraTets {
 		muestra.addOpinion(o1);
 		muestra.addOpinion(o2);
 		assertEquals(TipoOpinion.PHTIA_CHINCHE, muestra.resultadoActualOpiniones());
-	}
-	
-	@Test
-	void Agrego2OpinionYElTipoDeLaOpinionEsNingunaPqNoCoinciden() {
-		when(o1.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
-		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
-		when(o2.getTipo()).thenReturn(TipoOpinion.VINCHUCA);
-		when(o2.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
-		muestra.addOpinion(o1);
-		muestra.getUltimaFechaVotacion();
-		muestra.addOpinion(o2);
-		assertEquals(TipoOpinion.NINGUNA, muestra.resultadoActualOpiniones());
 	}
 	
 	@Test
@@ -86,7 +69,7 @@ class MuestraTets {
 		when(o3.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
 		muestra.addOpinion(o1);
 		muestra.addOpinion(o2);
-		assertEquals(2, muestra.getOpiniones().size());
+		assertEquals(3, muestra.getOpiniones().size());
 		muestra.addOpinion(o3);
 		assertEquals(1, muestra.getOpiniones().size());
 	}
@@ -120,14 +103,18 @@ class MuestraTets {
 	
 	@Test 
 	void MuestraEnEstadoVerificadoNoSePuedeVotar() {
-		muestra.setEstado(new MuestraVerificada());
-		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
-		when(o1.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
-		when(o2.getNivelConocimiento()).thenReturn(NivelParticipante.EXPERTO);
-		when(o2.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
+		muestra.setEstado(new MuestraDeExpertos());
+		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.EXPERTO);
+		when(o1.getTipo()).thenReturn(TipoOpinion.VINCHUCA);
 		muestra.addOpinion(o1);
+		assertEquals(NivelVerificacion.VERIFICADA, muestra.getNivelVerificacion());
+		when(o2.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
+		when(o2.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
+		when(o3.getNivelConocimiento()).thenReturn(NivelParticipante.EXPERTO);
+		when(o3.getTipo()).thenReturn(TipoOpinion.CHINCHE_FOLIADA);
 		muestra.addOpinion(o2);
-		assertEquals(0, muestra.getOpiniones().size());
+		muestra.addOpinion(o3);
+		assertEquals(2, muestra.getOpiniones().size()); // Quedan solo las dos opiniones que verificaron la muestra.
 	}
 	
 	@Test
@@ -159,7 +146,7 @@ class MuestraTets {
 
 	@Test
 	void testGetters() {
-		muestra.getFechaCreacion();
+		muestra.getFechaCreacion(); //Por cobertura
 		assertEquals(p1, muestra.getRecolector());
 		assertEquals(u1, muestra.getUbicacion());
 	}
