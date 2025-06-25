@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDateTime;
+
 
 class MuestraTets {
 	
@@ -25,7 +27,8 @@ class MuestraTets {
 		z1 = mock(ZonaCobertura.class);
 		muestra = new Muestra("fotoURL", EspecieVinchuca.INFESTANS, p1,u1);
 	}
-
+	
+	
 	@Test
 	void seAgregaOpinionDistintaYEmpatanTest() {
 		when(o1.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
@@ -149,5 +152,18 @@ class MuestraTets {
 		muestra.getFechaCreacion(); //Por cobertura
 		assertEquals(p1, muestra.getRecolector());
 		assertEquals(u1, muestra.getUbicacion());
+	}
+	
+	@Test
+	void testGettersV2() {
+		when(o1.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
+		when(o1.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
+		when(o2.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
+		when(o2.getNivelConocimiento()).thenReturn(NivelParticipante.BASICO);
+		muestra.addOpinion(o1);
+		muestra.addOpinion(o2);
+		LocalDateTime ultimaFecha = o2.getFechaCreacion();
+		assertEquals(ultimaFecha, muestra.getUltimaFechaVotacion());
+		
 	}
 }
